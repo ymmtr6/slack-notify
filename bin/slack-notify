@@ -1,0 +1,33 @@
+#!/bin/bash
+
+SLACK_NOTIFY_VERSION="0.0.1"
+
+if [ -p /dev/stdin ]; then
+
+message=`cat -`
+message="\`\`\`${message}\`\`\`"
+
+else
+
+message=${1}
+
+fi
+
+data=`cat << EOF
+{
+  "text": "${message}",
+  "blocks": [
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "${message}"
+      }
+    }
+  ]
+}
+EOF`
+
+curl -H "Content-type: application/json" -s -S -X POST -d "${data}" "${SLACK_WEBHOOK}"
+# curl -i -H "Content-type: application/json" -s -S -X POST -d "${data}" "${SLACK_WEBHOOK}"
+
