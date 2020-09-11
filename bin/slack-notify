@@ -1,6 +1,11 @@
 #!/bin/bash
 
-SLACK_NOTIFY_VERSION="0.0.1"
+SLACK_NOTIFY_VERSION="0.0.2"
+
+if [ -z "$SLACK_WEBHOOK" ]; then
+  echo "環境変数SLACK_WEBHOOKを設定してください"
+  exit
+fi
 
 if [ -p /dev/stdin ]; then
 
