@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SLACK_NOTIFY_VERSION="0.0.2"
+SLACK_NOTIFY_VERSION="0.0.3"
 
 if [ -z "$SLACK_WEBHOOK" ]; then
   echo "環境変数SLACK_WEBHOOKを設定してください"
@@ -9,12 +9,15 @@ fi
 
 if [ -p /dev/stdin ]; then
 
-message=`cat -`
-message="\`\`\`${message}\`\`\`"
+message="\`\`\`$(cat -)\`\`\`"
 
 else
 
-message=${1}
+message=""
+for x in "$@"
+do
+  message="${message}\n${x}"
+done
 
 fi
 
