@@ -8,7 +8,7 @@ if [ -z "$SLACK_WEBHOOK" ]; then
 fi
 
 if [ -p /dev/stdin ]; then
-echo $(cat -)
+echo -e $(cat -)
 message="\`\`\`$(cat -)\`\`\`"
 
 else
@@ -23,7 +23,7 @@ if [ -z "${message}" ]; then
   message="$(hostname):${PWD##*/} ${USER}\$ slack-notify\n"
 fi
 
-echo "${message}"
+echo -e "${message}"
 
 fi
 
