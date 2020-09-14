@@ -19,6 +19,10 @@ do
   message="${message}\n${x}"
 done
 
+if [ -z "${message}" ]; then
+  message="$(hostname):${PWD##*/} ${USER}\$ slack-notify"
+fi
+
 fi
 
 data=`cat << EOF
@@ -37,5 +41,4 @@ data=`cat << EOF
 EOF`
 
 curl -H "Content-type: application/json" -s -S -X POST -d "${data}" "${SLACK_WEBHOOK}"
-# curl -i -H "Content-type: application/json" -s -S -X POST -d "${data}" "${SLACK_WEBHOOK}"
 
