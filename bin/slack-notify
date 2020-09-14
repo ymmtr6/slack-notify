@@ -8,7 +8,7 @@ if [ -z "$SLACK_WEBHOOK" ]; then
 fi
 
 if [ -p /dev/stdin ]; then
-
+echo $(cat -)
 message="\`\`\`$(cat -)\`\`\`"
 
 else
@@ -16,12 +16,14 @@ else
 message=""
 for x in "$@"
 do
-  message="${message}\n${x}"
+  message="${message}${x}\n"
 done
 
 if [ -z "${message}" ]; then
   message="$(hostname):${PWD##*/} ${USER}\$ slack-notify"
 fi
+
+echo "${message}\n"
 
 fi
 
@@ -40,5 +42,4 @@ data=`cat << EOF
 }
 EOF`
 
-curl -H "Content-type: application/json" -s -S -X POST -d "${data}" "${SLACK_WEBHOOK}"
-
+curl -H "Content-type: application/json" -s -S -X POST -d "${data}" "${SLACK_WEBHOOK}" > /dev/null
