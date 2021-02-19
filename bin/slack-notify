@@ -8,8 +8,9 @@ if [ -z "$SLACK_WEBHOOK" ]; then
 fi
 
 if [ -p /dev/stdin ]; then
-echo -n -e $(cat -)
-message="\`\`\`$(cat -)\`\`\`"
+stdin=$(cat -)
+echo -n -e ${stdin}
+message="\`\`\`${stdin}\`\`\`"
 
 else
 
@@ -24,7 +25,7 @@ if [ -z "${message}" ]; then
 fi
 
 echo -n -e "${message}"
-
+stdin=${message}
 fi
 
 data=`cat << EOF
